@@ -2,6 +2,5 @@
 
 This repository holds the onboarding projects for the three software subsystems.
 
-- [Simulation Team Onboarding Projects](sims)
-- [Data Team Onboarding Projects](data)
 - [Autonomous Team Onboarding Projects](auto)
+

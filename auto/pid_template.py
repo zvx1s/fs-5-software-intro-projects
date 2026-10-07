@@ -13,7 +13,7 @@ def make_car(desired_v:float=20.0, dt:float=0.1) -> dict:
         "dt" : dt, #time step of your car, how much the time changes every time you update/step
         "desired_v" : desired_v, #desired velocity of your car, the velocity you want to maintain
         "step" : 0,
-    
+        
         #hint: use these variables in the integral and derivative portion of your PID control (steps 5 and 6 )
         "error_prev" : None,
         "net_integral" : 0.0
@@ -44,19 +44,21 @@ def calculate_desired_acceleration(car: dict, K_P: float, K_I: float = 0.0, K_D:
         #input: car["v"], car["desired_v"] (floats)
         #output: desired acceleration and error tuple(float, float)
         error = car["desired_v"] - car["v"]
+        if car["error_prev"] == None:
+                car["error_prev"] = 0.0
+        change_err = (error - float(car["error_prev"]))
+        car["error_prev"] = float(error)
+        
 
         car["net_integral"] += (error * car["dt"])
         
         '''Every time you calculate error add the error integral, found by error * dt, 
-        to the net_integral. Then when calculating desired acceleration use the 
+        to the net_integral. Then when calculating desired accelerqation use the 
         net_integral as shown in the equation.'''
         '''make a variable for de or two'''
-        C = K_P * error + K_I * car["net_integral"] + K_D * (error - car["error_prev"])/car["dt"]
+        C = K_P * error + K_I * car["net_integral"] + K_D * change_err/car["dt"]
 
         return (C, error)
-
-
-
 
 
 def acceleration_to_throttle_percentage(acceleration_desired: float, mass: float = 1000, max_throttle_force: float = 5000) -> float:
