@@ -23,7 +23,6 @@ For more information: https://www.mathworks.com/discovery/pid-control.html
 3. Install matplotlib: https://matplotlib.org/stable/install/index.html
 4. Install PyTorch: https://pytorch.org/get-started/locally/
 5. Run the following files respectively: `pid_template.py`, `run_template.py`, `run_template_copy.py`
-6. Observe all graph predictions.
 
 
 ## P.I.D. Tuning and Observations
