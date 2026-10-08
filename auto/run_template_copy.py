@@ -9,31 +9,43 @@ from pid_template import update
 from pid_template import calculate_desired_acceleration
 from pid_template import acceleration_to_throttle_percentage
 
+
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
-car = make_car(desired_v=20.0, dt=0.1)
+car = make_car(desired_v=100.0, dt=0.1)
 
 # Create weight and bias
 weight = 0.7
 bias = 0.3
 
-# Create range values
-start = 0
-end = 20.0
-step = 550
+velocities = []
+a_des = []
+change = 0
+
+
+STEPS = 550
 
 K_P = 0.4
-K_I = 0.035
-K_D = 0.1
+K_I = 0.0
+K_D = 0.0
+
+for i in range(STEPS):
+    if i % 500 == 0:
+        new_des = car["desired_v"] * 1.5
+        car = make_car(desired_v = new_des, dt=0.1)
+    calc_des, error = calculate_desired_acceleration(car, K_P, K_I, K_D)
+    calc_thrott = acceleration_to_throttle_percentage(calc_des, 1000, 5000)
+    update(car, calc_thrott, 1000, 5000, 2.0)
+    velocities.append([car["v"], car["desired_v"]])
+    a_des.append(calc_des)
     
-STEPS = 550
-    
-X = torch.arange(start, end, step).unsqueeze(dim=1) # without unsqueeze, errors will happen later on (shapes within linear layers)
-y = weight * X + bias
+
+X = torch.tensor(velocities).float()
+y = torch.tensor(a_des).float().unsqueeze(1)
+
 print([car["v"], car["desired_v"]], [calculate_desired_acceleration(car, K_P, K_I, K_D)])
-
-
 
 # Split data
 train_split = int(0.8 * len(X))
@@ -97,11 +109,9 @@ def plot_predictions(train_data=X_train,
 
 # Set the manual seed when creating the model (this isn't always needed but is used for demonstrative purposes, try commenting it out and seeing what happens)
 torch.manual_seed(42)
-model_1 = LinearRegressionModelV2()
-model_1, model_1.state_dict()
 
 #WRITE CODE HERE
-velocities = torch.tensor([[]])
+velocities = torch.tensor([])
 a_des = torch.tensor([])
 
 '''learn passing in python function arguments in python docs, learn slicing, indexing'''
@@ -147,14 +157,8 @@ for epoch in range(epochs):
     if epoch % 100 == 0:
         print(f"Epoch: {epoch} | Train loss: {loss} | Test loss: {test_loss}")
 
-def a_des_over_time(calc_thrott):
-    for i in range(STEPS):
-        calc_des, error = calculate_desired_acceleration(car, K_P, K_I, K_D)
-        calc_thrott = acceleration_to_throttle_percentage(calc_des, 1000, 5000)
-        update(car, calc_thrott, 1000, 5000, 2.0)
-        velocities.append([car["v"]], [car["desired_v"]])
-        a_des.append([calc_des])
-        
+
+
 
 plt.figure()
 plt.xlabel("time(s)")
