@@ -15,13 +15,7 @@ K_D = 0.1
 STEPS = 550
     
 car = make_car(desired_v=20.0, dt=0.1)
-'''Because the initial error is large, the proportional term initially commands strong acceleration. 
-In my implementation, the derivative term also experiences a large positive change on the first timestep 
-because the previous error is initialized to zero, which creates a brief startup transient. 
-Once the car begins accelerating and the error starts decreasing, the derivative term becomes negative 
-and opposes the acceleration command. Increasing \(K_D\) strengthens this damping effect, so the car 
-approaches the target with less overshoot. The integral term is what helps eliminate the remaining 
-steady-state error.'''
+
 #WRITE CODE HERE
 velocities = []
 errors = []
