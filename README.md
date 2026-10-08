@@ -26,8 +26,21 @@ For more information: https://www.mathworks.com/discovery/pid-control.html
 6. Observe all graph predictions.
 
 
-## Tuning and Implementation
+## P.I.D. Tuning and Observations
 
+| P.I.D. Tuning Figure 1 | P.I.D. Tuning Figure 2 |
+| :---: | :---: |
+| ![alt text](Figure_1.png) | ![alt text](Figure_2.png) |
+
+As I was tuning the derivative term `K_D` and the desired velocity `car["desired_v"]`, I noticed that there was an initial oscillation that took place at the beginning of both graphs. This oscillation is a well-known phenomenon called the `derivative kick`, and it occurs because the derivative term becomes increasingly sensitive to a sudden change in the `error term`. Because the discrepency between the desired velocity and the current velocity became increasingly larger as I implemented higher values for `car["desired_v"]`, the proportional gain rapidly increased in strength, causing the `error` term to shrink rapidly. Additionally, in the implementation of the increased `car["desired_v"]`, the stored `car["prev_error"]` jumped from 0 to a very large initial error. The `derivative kick` is also known as the `transient`, which describes the temporary behavior that a system displays after the system changes in some way. This often happens before the system settles into its long-term behavior.
+
+Observations:
+
+- At `20 m/s`, the controller converged smoothly toward `car["desired_v"]` with minor `overshoot` at the following values for each of the three terms: `K_P` = `0.4`, `K_I` = `0.035`, `K_D` = `0.1`
+
+- At `100 m/s`, the controller converged with greater `overshoot` beforehand. This was due to a greater initial error `error["prev_error"]`, which caused the proportional gain to rapidly increase in strength.
+
+- Increasing the derivative gain reduced the `overshoot`, but it also made the startup `transient`, a.k.a. the `derivative kick` far greater as a result.
 
 ## Known Issues (Work In Progress)
 
