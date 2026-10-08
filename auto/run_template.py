@@ -21,15 +21,16 @@ velocities = []
 errors = []
 times = []
 '''learn passing in python function arguments'''
+for i in range(STEPS):
+    calc_des, error = calculate_desired_acceleration(car, K_P, K_I, K_D)
 
-def a_des_over_time(calc_thrott):
-    for i in range(STEPS):
-        calc_des, error = calculate_desired_acceleration(car, K_P, K_I, K_D)
-        calc_thrott = acceleration_to_throttle_percentage(calc_des, 1000, 5000)
-        update(car, calc_thrott, 1000, 5000, 2.0)
-        velocities.append(car["v"])
-        errors.append(error)
-        times.append(car["t"])
+    calc_thrott = acceleration_to_throttle_percentage(calc_des, 1000, 5000)
+    update(car, calc_thrott, 1000, 5000, 2.0)
+    velocities.append(car["v"])
+    errors.append(error)
+    times.append(car["t"])
+
+
 
 plt.figure()
 plt.xlabel("time(s)")

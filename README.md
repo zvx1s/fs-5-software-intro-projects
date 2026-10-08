@@ -25,6 +25,10 @@ For more information: https://www.mathworks.com/discovery/pid-control.html
 5. Run the following files respectively: `pid_template.py`, `run_template.py`, `run_template_copy.py`
 6. Observe all graph predictions.
 
+
+## Tuning and Implementation
+
+
 ## Known Issues (Work In Progress)
 
 This project is still ongoing, as the linear regression model in PyTorch, specifically the training loop, needs to be completed.
