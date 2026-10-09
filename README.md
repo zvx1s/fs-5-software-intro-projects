@@ -18,7 +18,7 @@ For more information: https://www.mathworks.com/discovery/pid-control.html
 
 ## P.I.D. Controller Installation & Implementation
 
-1. Clone this repository.
+1. Clone the repository with the following command: git clone https://github.com/zvx1s/fs-5-software-intro-projects.git
 2. Install numpy: https://numpy.org/install/
 3. Install matplotlib: https://matplotlib.org/stable/install/index.html
 4. Install PyTorch: https://pytorch.org/get-started/locally/
@@ -31,7 +31,7 @@ For more information: https://www.mathworks.com/discovery/pid-control.html
 | :---: | :---: |
 | ![alt text](Figure_1.png) | ![alt text](Figure_2.png) |
 
-As I was tuning the derivative term `K_D` and the desired velocity `car["desired_v"]`, I noticed that there was an initial oscillation that took place at the beginning of both graphs. This oscillation is a well-known phenomenon called the `derivative kick`, and it occurs because the derivative term becomes increasingly sensitive to a sudden change in the `error term`. Because the discrepency between the desired velocity and the current velocity became increasingly larger as I implemented higher values for `car["desired_v"]`, the proportional gain rapidly increased in strength, causing the `error` term to shrink rapidly. Additionally, in the implementation of the increased `car["desired_v"]`, the stored `car["prev_error"]` jumped from 0 to a very large initial error. The `derivative kick` is also known as the `transient`, which describes the temporary behavior that a system displays after the system changes in some way. This often happens before the system settles into its long-term behavior.
+As I was tuning the derivative term `K_D` and the desired velocity `car["desired_v"]`, I noticed that there was an initial oscillation that took place at the beginning of both graphs. This oscillation is a well-known phenomenon called the `derivative kick`, and it occurs because the derivative term `K_D` becomes increasingly sensitive to a sudden change in the `error term`. Because the discrepency between the desired velocity and the current velocity became increasingly larger as I implemented higher values for `car["desired_v"]`, the proportional gain rapidly increased in strength, causing the `error` term to shrink rapidly. Additionally, in the implementation of the increased `car["desired_v"]`, the stored `car["prev_error"]` jumped from `0` to a very large initial error. The `derivative kick` is also known as the `transient`, which describes the temporary behavior that a system displays after the system changes in some way. This often happens before the system settles into its long-term behavior.
 
 Observations:
 
@@ -43,15 +43,26 @@ Observations:
 
 ## Known Issues (Work In Progress)
 
-This project is still ongoing, as the linear regression model in PyTorch, specifically the training loop, needs to be completed.
+This project is still ongoing, as the linear regression model in PyTorch, specifically the matrix multiplication between the `X` and `y` tensors still needs to be completed.
 
+## Works Cited
 
+- Bourke, Daniel. “01. PyTorch Workflow Fundamentals - Zero to Mastery Learn Pytorch for Deep Learning.” 01. PyTorch Workflow Fundamentals - Zero to Mastery Learn PyTorch for Deep Learning, www.learnpytorch.io/01_pytorch_workflow/. Accessed 7 Oct. 2026.
 
+- Contributors, PyTorch. “Pytorch Documentation.” PyTorch Documentation - PyTorch 2.14 Documentation, 1 Jan. 2023, docs.pytorch.org/docs/2.14/index.html.
 
+- Mejbah Ahammad. “PyTorch Day 04: Indexing, Slicing, and Joining Tensors.” DEV Community, 16 Jan. 2025, https://dev.to/ahammadmejbah/pytorch-day-04-indexing-slicing-and-joining-tensors-7kl. Accessed 8 Oct. 2026.
 
-
-
-
-
-- [Autonomous Team Onboarding Projects](auto)
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+### Special thanks to Dylan for guiding me. Wouldn't have made it this far without him.
 

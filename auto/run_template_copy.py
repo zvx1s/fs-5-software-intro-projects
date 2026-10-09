@@ -40,10 +40,13 @@ for i in range(STEPS):
     update(car, calc_thrott, 1000, 5000, 2.0)
     velocities.append([car["v"], car["desired_v"]])
     a_des.append(calc_des)
-    
 
 X = torch.tensor(velocities).float()
+
 y = torch.tensor(a_des).float().unsqueeze(1)
+
+print(X.size())
+print(y.size())
 
 print([car["v"], car["desired_v"]], [calculate_desired_acceleration(car, K_P, K_I, K_D)])
 
@@ -110,14 +113,11 @@ def plot_predictions(train_data=X_train,
 # Set the manual seed when creating the model (this isn't always needed but is used for demonstrative purposes, try commenting it out and seeing what happens)
 torch.manual_seed(42)
 
-#WRITE CODE HERE
-velocities = torch.tensor([])
-a_des = torch.tensor([])
 
 '''learn passing in python function arguments in python docs, learn slicing, indexing'''
 
 # Set the number of epochs 
-epochs = 1000 
+epochs = 900 
 
 # Put data on the available device
 # Without this, error will happen (not all model/data on device)
@@ -156,7 +156,6 @@ for epoch in range(epochs):
 
     if epoch % 100 == 0:
         print(f"Epoch: {epoch} | Train loss: {loss} | Test loss: {test_loss}")
-
 
 
 
